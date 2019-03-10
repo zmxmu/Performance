@@ -42,7 +42,6 @@ android {
 dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
     compile group: "com.tencent.matrix", name: "matrix-android-lib", version: MATRIX_VERSION, changing: true
-    compile group: "com.tencent.matrix", name: "matrix-android-commons", version: MATRIX_VERSION, changing: true
     implementation project(':matrix-trace-canary')
     implementation project(':matrix-resource-canary:matrix-resource-canary-android')
     implementation project(':matrix-resource-canary:matrix-resource-canary-common')
@@ -53,6 +52,7 @@ dependencies {
     androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
+    implementation project(':matrix-android-commons')
 }
 
 apply plugin: 'com.tencent.matrix-plugin'
