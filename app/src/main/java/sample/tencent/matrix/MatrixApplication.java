@@ -27,9 +27,6 @@ import com.tencent.matrix.resource.config.ResourceConfig;
 import com.tencent.matrix.trace.TracePlugin;
 import com.tencent.matrix.trace.config.TraceConfig;
 import com.tencent.matrix.util.MatrixLog;
-import com.tencent.sqlitelint.SQLiteLint;
-import com.tencent.sqlitelint.SQLiteLintPlugin;
-import com.tencent.sqlitelint.config.SQLiteLintConfig;
 
 import sample.tencent.matrix.config.DynamicConfigImplDemo;
 import sample.tencent.matrix.listener.TestPluginListener;
@@ -43,13 +40,6 @@ public class MatrixApplication extends Application {
 
     private static Context sContext;
 
-    private static SQLiteLintConfig initSQLiteLintConfig() {
-        try {
-            return new SQLiteLintConfig(SQLiteLint.SqlExecutionCallbackMode.CUSTOM_NOTIFY);
-        } catch (Throwable t) {
-            return new SQLiteLintConfig(SQLiteLint.SqlExecutionCallbackMode.CUSTOM_NOTIFY);
-        }
-    }
 
     @Override
     public void onCreate() {
@@ -94,11 +84,6 @@ public class MatrixApplication extends Application {
             builder.plugin(ioCanaryPlugin);
 
 
-            // prevent api 19 UnsatisfiedLinkError
-            //sqlite
-            SQLiteLintConfig config = initSQLiteLintConfig();
-            SQLiteLintPlugin sqLiteLintPlugin = new SQLiteLintPlugin(config);
-            builder.plugin(sqLiteLintPlugin);
         }
 
         Matrix.init(builder.build());

@@ -40,19 +40,15 @@ android {
 
 
 dependencies {
-    compile fileTree(dir: 'libs', include: ['*.jar'])
+    compile fileTree(include: ['*.jar'], dir: 'libs')
     compile group: "com.tencent.matrix", name: "matrix-android-lib", version: MATRIX_VERSION, changing: true
     compile group: "com.tencent.matrix", name: "matrix-android-commons", version: MATRIX_VERSION, changing: true
     implementation project(':matrix-trace-canary')
     implementation project(':matrix-resource-canary:matrix-resource-canary-android')
     implementation project(':matrix-resource-canary:matrix-resource-canary-common')
     implementation project(':matrix-io-canary')
-    compile group: "com.tencent.matrix", name: "matrix-sqlite-lint-android-sdk", version: MATRIX_VERSION, changing: true
-    releaseCompile group: "com.tencent.matrix", name: "matrix-sqlite-lint-android-sdk-no-op", version: MATRIX_VERSION, changing: true
-
     compile 'com.android.support:appcompat-v7:24.0.0'
     compile 'com.android.support:recyclerview-v7:24.0.0'
-
     testCompile 'junit:junit:4.12'
     androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'

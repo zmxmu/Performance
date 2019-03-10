@@ -25,7 +25,6 @@ import android.widget.Button;
 import sample.tencent.matrix.io.TestIOActivity;
 import sample.tencent.matrix.issue.IssuesMap;
 import sample.tencent.matrix.resource.TestLeakActivity;
-import sample.tencent.matrix.sqlitelint.TestSQLiteLintActivity;
 import sample.tencent.matrix.trace.TestTraceMainActivity;
 
 
@@ -70,14 +69,6 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        Button testSQLiteLint = (Button) findViewById(R.id.test_sqlite_lint);
-        testSQLiteLint.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this, TestSQLiteLintActivity.class);
-                startActivity(intent);
-            }
-        });
 
     }
 
