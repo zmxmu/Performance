@@ -100,7 +100,10 @@ public class FrameDecorator extends IDoFrameListener {
             layoutParam = new WindowManager.LayoutParams();
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
                 layoutParam.type = WindowManager.LayoutParams.TYPE_APPLICATION_OVERLAY;
-            } else {
+            } else if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                layoutParam.type = WindowManager.LayoutParams.TYPE_PHONE;
+            }
+            else{
                 layoutParam.type = WindowManager.LayoutParams.TYPE_TOAST;
             }
             layoutParam.flags = WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE

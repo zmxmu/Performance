@@ -17,11 +17,17 @@
 package sample.tencent.matrix;
 
 import android.content.Intent;
+import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
+import android.provider.Settings;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+
+import java.lang.reflect.Field;
 
 import sample.tencent.matrix.io.TestIOActivity;
 import sample.tencent.matrix.issue.IssuesMap;
@@ -31,7 +37,7 @@ import sample.tencent.matrix.trace.TestTraceMainActivity;
 
 public class MainActivity extends AppCompatActivity {
     private static final String TAG = "Matrix.MainActivity";
-
+    private static final int CHECKPRESSMISSON_CODE = 99;
     @Override
     protected void onResume() {
         super.onResume();
@@ -47,8 +53,18 @@ public class MainActivity extends AppCompatActivity {
         testTrace.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this, TestTraceMainActivity.class);
-                startActivity(intent);
+            if (Build.VERSION.SDK_INT >=  Build.VERSION_CODES.M&&!Settings.canDrawOverlays(MainActivity.this)) {//6.0以上
+                try{
+                    Intent  intent=new Intent(Settings.ACTION_MANAGE_OVERLAY_PERMISSION);
+                    startActivityForResult(intent, CHECKPRESSMISSON_CODE);
+                }catch (Exception e)
+                {
+                    e.printStackTrace();
+                }
+            }
+            else{
+                goToTraceActivity();
+            }
             }
         });
 
@@ -79,6 +95,23 @@ public class MainActivity extends AppCompatActivity {
         });
 
     }
-
+    private void goToTraceActivity(){
+        Intent intent = new Intent(MainActivity.this, TestTraceMainActivity.class);
+        startActivity(intent);
+    }
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == CHECKPRESSMISSON_CODE) {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                if (Settings.canDrawOverlays(this)) {
+                    Log.i(TAG, "已经打开悬浮窗权限");
+                    goToTraceActivity();
+                } else {
+                    Log.e(TAG, "需开启悬浮窗权限");
+                }
+            }
+        }
+    }
 
 }
